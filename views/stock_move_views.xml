@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <data>
+
+
+        <record id="view_stock_move_line_detailed_operation_tree_inherited" model="ir.ui.view">
+            <field name="name">view.stock.move.line.detailed.operation.tree.inherited</field>
+            <field name="model">stock.move.line</field>
+            <field name="inherit_id" ref="stock.view_stock_move_line_detailed_operation_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='lot_name']" position="after">
+                    <field name="filter_lot_by_availability" invisible="1" groups="stock.group_production_lot"/>
+                </xpath>
+                <xpath expr="//field[@name='lot_id']" position="attributes">
+                    <attribute name="context">{'default_product_id': product_id, 'default_company_id': company_id,
+                        'active_picking_id':picking_id,'filter_lot_by_availability':filter_lot_by_availability,
+                        'active_product_id':product_id,'lots_visible':lots_visible,'location_id':location_id}
+                    </attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_stock_move_line_operation_tree_inherited" model="ir.ui.view">
+            <field name="name">view.stock.move.line.operation.tree.inherited</field>
+            <field name="model">stock.move.line</field>
+            <field name="inherit_id" ref="stock.view_stock_move_line_operation_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='lot_name']" position="after">
+                    <field name="filter_lot_by_availability" invisible="1" groups="stock.group_production_lot"/>
+                    <field name="lots_visible" invisible="1"/>
+                </xpath>
+                <xpath expr="//field[@name='lot_id']" position="attributes">
+                    <attribute name="context">{'active_picking_id': picking_id,'default_company_id': parent.company_id,
+                            'default_product_id': parent.product_id,'filter_lot_by_availability':filter_lot_by_availability,
+                            'active_product_id':parent.product_id,'lots_visible':lots_visible,'location_id':parent.location_id}
+                    </attribute>
+                </xpath>
+            </field>
+        </record>
+
+
+
+    </data>
+</odoo>
